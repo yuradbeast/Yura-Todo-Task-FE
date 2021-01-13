@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Login} from "./features/login/Login";
-import {Router, Switch, Route, Link} from "react-router-dom";
+import {Router, Switch, Route} from "react-router-dom";
 import {history} from './helpers/history';
 import {TodoList} from "./features/todo/components/TodoList";
 import {Provider, useSelector} from "react-redux";
@@ -35,17 +35,12 @@ const App: AppInternalType = props => {
 
     return (
         <div className="App">
-
-            <Router history={history}>
-
-
                     <div className="container-fluid w-50">
                         <Switch>
                             <Route user={user} exact path={["/", "/todolist"]} component={TodoList}/>
                             <Route exact path="/login" component={Login}/>
                         </Switch>
                 </div>
-            </Router>
         </div>
 
     );

@@ -38,9 +38,9 @@ export const fetchAllTasks = () => (dispatch: Dispatch<any>) => {
     })
 };
 
-export const createTask = (task: TaskItem) => (dispatch: Dispatch<any>, getState: () => FullState) => {
+export const createTask = (task: TaskItem) => async (dispatch: Dispatch<any>, getState: () => FullState) => {
     const url = todoTasksBaseURL + "/createTask";
-    axios.post(url, task, {headers: authHeader()})
+     axios.post(url, task, {headers: authHeader()})
         .then((response: AxiosResponse<ResponseTaskItem>) => {
             const newTaskItem: ResponseTaskItem = response.data;
             const copyOfTodoMap = {[newTaskItem.id]: newTaskItem, ...getState().todo.taskMap,};

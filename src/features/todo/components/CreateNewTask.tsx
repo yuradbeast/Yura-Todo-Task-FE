@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+
 import styles from './todoList.module.css';
 import {NewTask, TaskItem} from "../todoInterfaces";
+// import moment from 'moment';
 import moment from 'moment-timezone'
 import {createTask} from "../todoListSlice";
-import * as _ from 'lodash';
 
 
-type CreateNewTaskProps = { isOpen: boolean, classname?: string }
+type CreateNewTaskProps = {
+    isOpen: boolean
+}
 
 export const CreateNewTask = (props: CreateNewTaskProps) => {
-    // const count = useSelector(sele);
     const dispatch = useDispatch();
     const [newTaskFields, setNewTaskFields] = useState<NewTask>({
         title: "",
@@ -25,9 +27,8 @@ export const CreateNewTask = (props: CreateNewTaskProps) => {
     }
 
     const handleSubmit = () => {
-        if (!_.isEmpty(newTaskFields.title)) return;
         const currentDate = moment().utcOffset(0).format();
-        // date: moment(new Date()).tz(moment.tz.guess()).format()
+        console.log("CURRENTDATE", currentDate);
         const objectToSubmit: TaskItem = {
             title: newTaskFields.title,
             done: newTaskFields.done,
@@ -38,16 +39,17 @@ export const CreateNewTask = (props: CreateNewTaskProps) => {
     }
 
     return props.isOpen ?
-        <div className={"container-fluid card mb-3 " + props.classname} style={{backgroundColor: 'lightblue'}}>
+        <div className="container-fluid card mb-3 " style={{backgroundColor: 'lightblue'}}>
             <div style={{display: "flex", flexDirection: 'column'}}>
                 <div className="form">
-                    <label htmlFor="form-label" className="form-label fw-bold">Create Task</label>
+                    <h4 className="form-label">Create Task</h4>
                     <textarea value={newTaskFields.title}
+                              placeholder="Write your task here"
                               onChange={e => handleNewTaskFieldsInputs("title", e.target.value)}
                               className="form-control" id="title"/>
 
                 </div>
-                <div className="" style={{display: "flex", justifyContent: "start", marginTop: '7px'}}>
+                <div style={{display: "flex", justifyContent: "start", marginTop: '7px'}}>
                     <input
                         checked={newTaskFields.done}
                         onChange={e => handleNewTaskFieldsInputs("done", !newTaskFields.done)}
@@ -60,7 +62,5 @@ export const CreateNewTask = (props: CreateNewTaskProps) => {
             <div className={styles.signInUpContainer}>
                 <button onClick={() => handleSubmit()} className="btn-sm btn-primary m-3">Submit</button>
             </div>
-        </div>
-        :
-        <div/>
+        </div> : <div/>;
 }
