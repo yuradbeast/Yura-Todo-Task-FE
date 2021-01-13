@@ -81,7 +81,7 @@ function registerValidSW(swUrl, config) {
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
-              // "Content is cached for offline use." message.
+              // "Content is cached for offline use." ServerSideError.
               console.log('Content is cached for offline use.');
 
               // Execute callback
@@ -94,7 +94,7 @@ function registerValidSW(swUrl, config) {
       };
     })
     .catch(error => {
-      console.error('Error during service worker registration:', error);
+      console.isError('Error during service worker registration:', error);
     });
 }
 
