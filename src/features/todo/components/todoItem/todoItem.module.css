@@ -1,7 +1,19 @@
-.doneAndDeleteContainer {
+.todoTaskCheckbox
+{
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todoTaskRow
+{
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    height: 50px;
+    align-items: center;
+}
+.todoTaskControls
+{
+    flex: 1;
 }
 
 .backgroundTaskItem {

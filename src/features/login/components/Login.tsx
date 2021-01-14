@@ -5,6 +5,7 @@ import {selectServerSideErrorMessage, signIn, signUp} from "../loginSlice";
 import {Credentials} from "../loginIntefaces";
 import * as _ from "lodash";
 import classNames from 'classnames'
+import {Button} from "@blueprintjs/core";
 
 
 type InputErrors = {
@@ -95,7 +96,7 @@ export const Login = () => {
     }
 
     return (
-        <div className={classNames("container-fluid card p-3" , styles.loginContainer)}>
+        <div className={classNames("container-fluid card mt-5" , styles.loginContainer)}>
             <div>
                 <div>
                     <label>Username</label>
@@ -114,8 +115,8 @@ export const Login = () => {
                 {getErrorElement(serverSideErrorMessage, "serverSideError")}
             </div>
             <div className={styles.signInUpContainer}>
-                <button onClick={() => handleSignIn()} className="btn-sm btn-primary m-3">Sign In</button>
-                <button onClick={() => handleSignUp()} className="btn-sm btn-primary m-3">Sign Up</button>
+                <Button icon="log-in" onClick={() => handleSignIn()} className="btn-sm btn-primary m-3">Sign In</Button>
+                <Button icon="upload" onClick={() => handleSignUp()} className="btn-sm btn-primary m-3">Sign Up</Button>
             </div>
         </div>
     );

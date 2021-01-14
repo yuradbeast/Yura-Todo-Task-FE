@@ -5,7 +5,7 @@ import axios, {AxiosResponse} from 'axios';
 import {Dispatch} from 'redux';
 import {FullState} from "../../app/store";
 import {todoListSlice} from "../todo/todoListSlice";
-import {BASE_BACKEND_URL, LOGIN_BASE_URL} from "../../App";
+import {LOGIN_BASE_URL} from "../../App";
 
 
 export const loginSlice = createSlice({

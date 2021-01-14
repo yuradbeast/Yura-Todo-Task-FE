@@ -6,6 +6,7 @@ import {NewTask, TaskItem} from "../../todoInterfaces";
 import moment from 'moment-timezone'
 import {createTask} from "../../todoListSlice";
 import classNames from 'classnames'
+import {Button} from "@blueprintjs/core";
 
 
 type CreateNewTaskProps = {
@@ -59,7 +60,8 @@ export const CreateNewTask = (props: CreateNewTaskProps) => {
                 </div>
             </div>
             <div>
-                <button onClick={() => handleSubmit()} className="btn-sm btn-primary m-3">Submit</button>
+                <Button onClick={() => handleSubmit()} intent={"success"}
+                        className="btn-sm btn-success m-3">Submit</Button>
             </div>
         </div> : <div/>;
 }

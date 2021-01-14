@@ -4,7 +4,7 @@ import axios, {AxiosResponse} from "axios";
 import authHeader from "../../helpers/authHeader";
 import {ResponseTaskItem, TaskItem, TaskMap} from "./todoInterfaces";
 import {FullState} from "../../app/store";
-import {BASE_BACKEND_URL, TODO_BASE_URL} from "../../App";
+import {TODO_BASE_URL} from "../../App";
 
 export const todoListSlice = createSlice({
     name: 'counter',

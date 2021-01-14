@@ -75,7 +75,8 @@ export const TodoList = (props) => {
                 </Menu>
             }
                      position={Position.RIGHT_TOP}>
-                <Button className={styles.sortByFieldButton}  icon="share" text={"Sorting by " + prettySortNames[orderBy.field]}/>
+                <Button className={styles.sortByFieldButton} icon="share"
+                        text={"Sorting by " + prettySortNames[orderBy.field]}/>
             </Popover>
 
             <RadioGroup
@@ -96,12 +97,12 @@ export const TodoList = (props) => {
         return <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
 
-                <button onClick={() => handleSignOut()} className="btn-sm btn-info m-3">Sign Out</button>
-                <button onClick={() => setIsCreatingNewTask(!isCreatingNewTask)}
-                        className="btn-sm btn-success m-3">Create New Task
-                </button>
-                <button onClick={() => handleDeleteAll()} className="btn-sm btn-danger m-3">Delete All Tasks
-                </button>
+                <Button icon="log-out" intent="none" onClick={() => handleSignOut()} className="btn-sm  m-3">Sign Out</Button>
+                <Button intent="success" onClick={() => setIsCreatingNewTask(!isCreatingNewTask)}
+                        className="  m-3">Create New Task
+                </Button>
+                <Button intent="danger" onClick={() => handleDeleteAll()} className=" m-3">Delete All Tasks
+                </Button>
                 {getSortDropDown()}
             </div>
         </nav>
