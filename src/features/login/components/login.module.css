@@ -1,0 +1,13 @@
+.signInUpContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.errorMessage {
+    color: red;
+    font-weight: bold;
+}
+
+.loginContainer {
+ max-width: 300px;
+}

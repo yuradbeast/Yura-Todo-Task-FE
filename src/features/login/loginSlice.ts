@@ -1,12 +1,12 @@
-import {createSlice, PayloadAction, Slice} from '@reduxjs/toolkit';
-import {Credentials, LoginState, User} from "./loginIntefaces";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Credentials, User} from "./loginIntefaces";
 
 import axios, {AxiosResponse} from 'axios';
 import {Dispatch} from 'redux';
 import {FullState} from "../../app/store";
 import {todoListSlice} from "../todo/todoListSlice";
+import {BASE_BACKEND_URL, LOGIN_BASE_URL} from "../../App";
 
-const loginBaseURL = "http://localhost:8080/api/v1/auth";
 
 export const loginSlice = createSlice({
     name: 'counter',
@@ -35,7 +35,7 @@ export const signOut = () => (dispatch: Dispatch) => {
 
 
 export const signIn = (credentials: Credentials) => (dispatch: Dispatch<any>) => {
-    const signInUrl = loginBaseURL + "/signin";
+    const signInUrl = LOGIN_BASE_URL + "/signin";
     axios.post(signInUrl, credentials).then((response: AxiosResponse<User>) => {
         dispatch(onSuccessfulSignIn(response))
     }).catch(error => {
@@ -51,16 +51,12 @@ const onSuccessfulSignIn = (response: AxiosResponse<User>) => (dispatch: Dispatc
 }
 
 export const signUp = (credentials: Credentials) => (dispatch: Dispatch<any>) => {
-    const signInUrl = loginBaseURL + "/signup";
+    const signInUrl = LOGIN_BASE_URL + "/signup";
     axios.post(signInUrl, credentials).then(() => {
         dispatch(signIn(credentials));
         dispatch(loginSlice.actions.setServerSideErrorMessage(""));
-    }).catch(error => {
+    }).catch(() => {
         dispatch(setServerSideErrorMessage("failed to signUp"));
-
-        // const data = error.response.data;
-        // todo:yuri i only get 1 message from server because of time limitation
-        // dispatch(loginSlice.actions.setServerSideErrorMessage(data.errors && data.errors[0].field + ": " + data.errors[0].defaultMessage));
     })
 };
 

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styles from './login.module.css';
-import {selectServerSideErrorMessage, signIn, signUp} from "./loginSlice";
-import {Credentials} from "./loginIntefaces";
+import {selectServerSideErrorMessage, signIn, signUp} from "../loginSlice";
+import {Credentials} from "../loginIntefaces";
 import * as _ from "lodash";
+import classNames from 'classnames'
 
 
 type InputErrors = {
@@ -25,20 +26,16 @@ export const Login = () => {
     }
 
 
-
-
     const getUsernameInputErrors = (username): string[] => {
         const errors: string[] = [];
         if (username.length < 4 || username.length > 13) {
             errors.push("Username must be at between 4 and 12 characters");
         }
-        if (username.search(/^[A-Z][a-z0-9]*$/) < 0) {
+        if (username.search(/^[a-zA-Z0-9]*$/) < 0) {
             errors.push("Username must start with english latter and can only contain numbers and letters");
         }
-        // setErrorsByField("username", errors)
-
         return errors;
- }
+    }
 
 
     const getPasswordInputErrors = (password): string[] => {
@@ -52,9 +49,8 @@ export const Login = () => {
         if (password.search(/[0-9]/) < 0) {
             errors.push("Your password must contain at least one digit.");
         }
-        // setErrorsByField("password", errors)
         return errors;
-  }
+    }
 
     const validateCredentials = (): boolean => {
         const passwordInputErrors = getPasswordInputErrors(credentials.password);
@@ -93,16 +89,14 @@ export const Login = () => {
     }
 
     const getErrorElement = (error, id: string) => {
-        // const key = id ? id : "error_element_" + _.replace(" ", "_").substring(0, 10);
-        return <div id={id} key={id}
-                    style={{color: "red", fontWeight: 'bold'}}>
+        return <div id={id} key={id} className={styles.errorMessage}>
             {error}
         </div>
     }
 
     return (
-        <div className="container-fluid card" style={{maxWidth: "300px"}}>
-            <div style={{display: "flex", flexDirection: 'column'}}>
+        <div className={classNames("container-fluid card p-3" , styles.loginContainer)}>
+            <div>
                 <div>
                     <label>Username</label>
                     <input value={credentials.username}
@@ -117,7 +111,7 @@ export const Login = () => {
                            className="form-control" id="exampleInputPassword1"/>
                     {!_.isEmpty(inputErrors.password) && getErrorElementsByField("password")}
                 </div>
-                { getErrorElement(serverSideErrorMessage, "serverSideError")}
+                {getErrorElement(serverSideErrorMessage, "serverSideError")}
             </div>
             <div className={styles.signInUpContainer}>
                 <button onClick={() => handleSignIn()} className="btn-sm btn-primary m-3">Sign In</button>

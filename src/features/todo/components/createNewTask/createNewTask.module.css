@@ -1,0 +1,14 @@
+.container {
+    background-color: #c2c3a7;
+}
+
+.textAreaContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.doneCheckBox {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 7px;
+}

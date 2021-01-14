@@ -1,6 +1,3 @@
-import moment from 'moment'
-import {User} from "../login/loginIntefaces";
-
 export interface TodoState {
     taskMap: TaskMap,
     todoItemIdUnderEdit: string

@@ -1,12 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Credentials, User} from "../login/loginIntefaces";
 import {Dispatch} from "redux";
 import axios, {AxiosResponse} from "axios";
-import {setServerSideErrorMessage} from "../login/loginSlice";
 import authHeader from "../../helpers/authHeader";
 import {ResponseTaskItem, TaskItem, TaskMap} from "./todoInterfaces";
 import {FullState} from "../../app/store";
-import * as _ from 'lodash';
+import {BASE_BACKEND_URL, TODO_BASE_URL} from "../../App";
 
 export const todoListSlice = createSlice({
     name: 'counter',
@@ -15,7 +13,6 @@ export const todoListSlice = createSlice({
     },
     reducers: {
         setTaskMap: (state, action) => {
-            console.log(action.payload)
             state.taskMap = action.payload
         }
     },
@@ -23,11 +20,10 @@ export const todoListSlice = createSlice({
 
 export const {setTaskMap} = todoListSlice.actions;
 
-const todoTasksBaseURL = "http://localhost:8080/api/v1/todoTasks";
 
 
 export const fetchAllTasks = () => (dispatch: Dispatch<any>) => {
-    const url = todoTasksBaseURL + "/allTasks";
+    const url = TODO_BASE_URL + "/allTasks";
     axios.get(url, {headers: authHeader()})
         .then((response: AxiosResponse<TaskMap>) => {
             const taskMap: TaskMap = response.data;
@@ -39,8 +35,8 @@ export const fetchAllTasks = () => (dispatch: Dispatch<any>) => {
 };
 
 export const createTask = (task: TaskItem) => async (dispatch: Dispatch<any>, getState: () => FullState) => {
-    const url = todoTasksBaseURL + "/createTask";
-     axios.post(url, task, {headers: authHeader()})
+    const url = TODO_BASE_URL + "/createTask";
+    axios.post(url, task, {headers: authHeader()})
         .then((response: AxiosResponse<ResponseTaskItem>) => {
             const newTaskItem: ResponseTaskItem = response.data;
             const copyOfTodoMap = {[newTaskItem.id]: newTaskItem, ...getState().todo.taskMap,};
@@ -52,7 +48,7 @@ export const createTask = (task: TaskItem) => async (dispatch: Dispatch<any>, ge
 };
 
 export const updateTask = (task: TaskItem) => (dispatch: Dispatch<any>, getState: () => FullState) => {
-    const url = todoTasksBaseURL + "/updateTask";
+    const url = TODO_BASE_URL + "/updateTask";
     axios.post(url, task, {headers: authHeader()})
         .then((response: AxiosResponse<ResponseTaskItem>) => {
             const newTask: ResponseTaskItem = response.data;
@@ -65,7 +61,7 @@ export const updateTask = (task: TaskItem) => (dispatch: Dispatch<any>, getState
 };
 
 export const deleteTask = (taskId: string) => (dispatch: Dispatch<any>, getState: () => FullState) => {
-    const url = todoTasksBaseURL + "/deleteTask?taskId=" + taskId;
+    const url = TODO_BASE_URL + "/deleteTask?taskId=" + taskId;
     axios.delete(url, {headers: authHeader()})
         .then(() => {
             const copyOfTodoMap = {...getState().todo.taskMap};
@@ -78,7 +74,7 @@ export const deleteTask = (taskId: string) => (dispatch: Dispatch<any>, getState
 };
 
 export const deleteAllTasks = () => (dispatch: Dispatch<any>) => {
-    const url = todoTasksBaseURL + "/deleteAllTasks";
+    const url = TODO_BASE_URL + "/deleteAllTasks";
     axios.delete(url, {headers: authHeader()})
         .then(() => {
             dispatch(setTaskMap({}))

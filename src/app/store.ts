@@ -1,4 +1,4 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import {todoListSlice} from '../features/todo/todoListSlice';
 import {loginSlice} from "../features/login/loginSlice";
 import {LoginState, User} from "../features/login/loginIntefaces";

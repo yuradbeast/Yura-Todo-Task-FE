@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
-import {TaskItem} from "../todoInterfaces";
+import {TaskItem} from "../../todoInterfaces";
 import moment from "moment-timezone";
 import {useDispatch} from "react-redux";
-import {deleteTask, updateTask} from "../todoListSlice";
+import {deleteTask, updateTask} from "../../todoListSlice";
 import * as _ from 'lodash';
+import styles from './todoItem.module.css';
+import classNames from 'classnames'
+
 
 export interface TodoItemProps {
     taskItem: TaskItem;
@@ -35,7 +38,7 @@ export const TodoItem = (props: TodoItemProps) => {
     const submitDisabled: boolean = (_.isEqual(editObject.title, taskItem.title));
 
     const getEditTextAreaElement = (): JSX.Element => {
-        return <div className="card-body ">
+        return <div className="card-body">
                     <textarea value={editObject.title}
                               onChange={(e) => handleTextEdit(e.target.value)}
                               className="form-control mb-2"
@@ -53,7 +56,7 @@ export const TodoItem = (props: TodoItemProps) => {
 
 
     const getDoneCheckBoxElement = (): JSX.Element => {
-        return <div style={{margin: '-14px 0 0 13px'}}>
+        return <div className={styles.doneCheckBox}>
             <input
                 checked={taskItem.done}
                 onChange={() => handleUpdate("done", !taskItem.done)}
@@ -65,7 +68,7 @@ export const TodoItem = (props: TodoItemProps) => {
     }
 
     return (
-        <div className={"card text-center " + props.classname} style={{backgroundColor: 'ButtonHighlight'}}>
+        <div className={classNames("card text-center ", props.classname, styles.backgroundTaskItem)} >
             <div className="card-header text-muted">
                 Created : {getTimeDisplayFormat(taskItem.date)}
             </div>
@@ -73,7 +76,7 @@ export const TodoItem = (props: TodoItemProps) => {
                 Last Modified : {getTimeDisplayFormat(taskItem.modified)}
             </div>
             {getEditTextAreaElement()}
-            <div className="" style={{display: "flex", justifyContent: "space-between", height: '50px'}}>
+            <div className={styles.doneAndDeleteContainer} >
                 {getDoneCheckBoxElement()}
                 <button onClick={() => dispatch(deleteTask(taskItem.id || ""))} className="btn-sm btn-danger m-2">
                     Delete

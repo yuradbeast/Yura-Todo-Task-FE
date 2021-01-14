@@ -1,0 +1,13 @@
+.doneAndDeleteContainer {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.backgroundTaskItem {
+    background-color: #cdcdcd;
+}
+
+.doneCheckBox {
+    margin: -14px 0 0 13px
+}

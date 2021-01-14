@@ -3,10 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectUser, signOut} from "../../login/loginSlice";
 import {deleteAllTasks, fetchAllTasks, selectTaskMap} from "../todoListSlice";
 import * as _ from 'lodash'
-import {CreateNewTask} from "./CreateNewTask";
+import {CreateNewTask} from "./createNewTask/CreateNewTask";
 import {TaskItem, TaskMap} from "../todoInterfaces";
-import {TodoItem} from "./TodoItem";
+import {TodoItem} from "./todoItem/TodoItem";
 import {User} from "../../login/loginIntefaces";
+import styles from './todoList.module.css'
 
 import {Button, Menu, MenuItem, Popover, Position, Radio, RadioGroup} from "@blueprintjs/core";
 
@@ -63,11 +64,10 @@ export const TodoList = (props) => {
     const getSortDropDown = () => {
         const handleOrderChange = (key, value) => {
             const copyOfOrderBy = {...orderBy, [key]: value}
-            console.log("LOOK", copyOfOrderBy);
             setOrderBy(copyOfOrderBy);
         }
 
-        return <div style={{marginBottom: "-38px"}}>
+        return <div className={styles.sortDropDownContainer}>
             <Popover content={
                 <Menu>
                     <MenuItem onClick={() => handleOrderChange("field", "modified")} text={prettySortNames.modified}/>
@@ -75,51 +75,51 @@ export const TodoList = (props) => {
                 </Menu>
             }
                      position={Position.RIGHT_TOP}>
-                <Button style={{width: "160px"}} icon="share" text={"Sorting by " + prettySortNames[orderBy.field]}/>
-                    </Popover>
+                <Button className={styles.sortByFieldButton}  icon="share" text={"Sorting by " + prettySortNames[orderBy.field]}/>
+            </Popover>
 
-                    <RadioGroup
-                        className="m-2 ml-3"
-                        inline={true}
-                        onChange={(e: any) => handleOrderChange("order", e.target.value)}
-                        selectedValue={orderBy.order}
-                    >
-                    <Radio label="Desc" value="desc"/>
-                    <Radio style={{marginRight: "7px"}} label="Asc" value="asc"/>
-                    </RadioGroup>
+            <RadioGroup
+                className="m-2 ml-3"
+                inline={true}
+                onChange={(e: any) => handleOrderChange("order", e.target.value)}
+                selectedValue={orderBy.order}
+            >
+                <Radio label="Desc" value="desc"/>
+                <Radio className={styles.marginRight7} label="Asc" value="asc"/>
+            </RadioGroup>
 
-                    </div>
-                }
+        </div>
+    }
 
 
-                const getNavBar = () => {
-                return <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
+    const getNavBar = () => {
+        return <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container-fluid">
 
                 <button onClick={() => handleSignOut()} className="btn-sm btn-info m-3">Sign Out</button>
                 <button onClick={() => setIsCreatingNewTask(!isCreatingNewTask)}
-                className="btn-sm btn-success m-3">Create New Task
+                        className="btn-sm btn-success m-3">Create New Task
                 </button>
                 <button onClick={() => handleDeleteAll()} className="btn-sm btn-danger m-3">Delete All Tasks
                 </button>
-            {getSortDropDown()}
-                </div>
-                </nav>
-            }
+                {getSortDropDown()}
+            </div>
+        </nav>
+    }
 
-                return (
-                <div className="bg-light">
-                    {getNavBar()}
-                    <CreateNewTask isOpen={isCreatingNewTask}/>
-                    <h1>Tasks</h1>
-                    {
-                        _.map(getSortedTodoList(orderBy.field, orderBy.order), task => {
-                            return <TodoItem classname="mt-4" key={task.id} taskItem={task}/>
-                        })
-                    }
-                </div>
-                );
-                }
+    return (
+        <div className="bg-light">
+            {getNavBar()}
+            <CreateNewTask isOpen={isCreatingNewTask}/>
+            <h1>Tasks</h1>
+            {
+                _.map(getSortedTodoList(orderBy.field, orderBy.order), task => {
+                    return <TodoItem classname="mt-4" key={task.id} taskItem={task}/>
+                })
+            }
+        </div>
+    );
+}
 
 
 
